@@ -16,19 +16,9 @@ An entry **ISBAD** if it is empty, None, NA, or TODO
 
 **SPREADSHEET_ID**: test = test sheet, real_deal = the real sheet
 
-## Dependencies
+## Loading
 
-Media Cloud:
-
-``` pip install mediacloud ```
-
-Matplotlib:
-
-``` pip install matplotlib ```
-
-Venn:
-
-``` pip install matplotlib_venn ```
+These scripts feed data to fuskei. `overwrite.py` overwrites existing metadata when feeding while `add_new.py` preserves existing metadata.
 
 ## Collections
 
@@ -66,7 +56,7 @@ These scripts handle metadata and cleaning.
 
 ### Clean
 
-These scripts go back to the Google Sheet and clean and dedupe the data. 
+These scripts clean and dedupe the data. 
 
 **IMPORTANT NOTE** Please do not write directly to the official World News Sources sheet. Test your code on the copy sheet. To switch between the two, just set the `spreadsheet_id` variable to either `test` or `real_deal`
 
