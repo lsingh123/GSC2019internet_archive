@@ -33,19 +33,6 @@ def truncate(url):
     if url.find('subject=') != -1:
         return ''
     return url
-        
-def test(path):
-    stream = re.finditer('/', path)
-    try: 
-        next(stream)
-        path = path[next(stream).span()[0]:]
-    except StopIteration:
-        path = path
-    return path
-
-def test1(path):
-    path = path.split('/')[1]
-    print(path)
 
         
 def make_truncated():
@@ -57,7 +44,7 @@ def make_truncated():
             total += 1
             try:
                 line = ''.join(line)
-                url_raw = truncate(''.join(line))
+                url_raw = truncate(line)
                 o = urllib.parse.urlparse('http://www.' + url_raw)
                 url = o.netloc
                 if url not in sources:
@@ -79,3 +66,13 @@ def make_truncated():
 
 #sources = make_truncated()
 
+def test():
+    with open('data/raw/all_raw.csv', 'r') as inf:
+        reader = csv.reader(inf, delimiter=',')
+        total = 0
+        for line in reader:
+            total += 1
+            #if total % 10000 == 0: print(line[1], line[7])
+            if line[1].find("archive.org") != -1 : print(line)
+
+test()

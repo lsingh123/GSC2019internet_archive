@@ -72,9 +72,10 @@ def truncate(url):
 
 
 def is_bad(entry):
-    entry = entry.strip(' ')
+    if type(entry) == str: entry = entry.strip(' ')
     b = (entry == "TODO" or entry == 'None' or entry == 'none' or entry == '' or 
-     entry == 'na' or entry == 'NA' or entry == 'todo' or entry == 'Todo')
+     entry == 'na' or entry == 'NA' or entry == 'todo' or entry == 'Todo' or entry == [] 
+     or entry == "[]" or entry == [''])
     return b
 
 def initialize():
