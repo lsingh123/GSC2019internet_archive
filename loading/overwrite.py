@@ -1,34 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  8 11:12:40 2019
-
-@author: lavanyasingh
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  8 10:30:59 2019
-
-@author: lavanyasingh
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jun 19 11:28:34 2019
-
-@author: lavanyasingh
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jun 17 12:49:40 2019
-
-@author: lavanyasingh
-"""
 
 
 import os

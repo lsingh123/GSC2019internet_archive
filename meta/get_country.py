@@ -14,8 +14,10 @@ from bs4 import BeautifulSoup
 import requests
 import helpers
 import tldextract
+import urllib
+from prefixes import prefixes
 
-path = 'data/cleaned/all.csv'
+path = 'data/raw/all_raw_cleaned.csv'
 
 def get_cc():
     page = 'https://icannwiki.org/Country_code_top-level_domain'
@@ -65,4 +67,81 @@ def write_cc():
     print("DONE")
 
 
-write_cc()
+#sources = assign_cc()
+
+
+q_endpoint = 'http://lavanya-dev.us.archive.org:3030/testwn/query'
+u_endpoint = 'http://lavanya-dev.us.archive.org:3030/testwn/update'
+
+endpoint_url = u_endpoint
+
+countries = helpers.get_countries()
+
+#takes a raw country name and returns wikidata country code if it exists
+def get_country_code(name):
+    try:
+        return 'wd:'+ countries[helpers.strip_spaces(name).lower()]
+    except KeyError as e:
+        return("\'TODO\'")
+        print(e)
+
+def get_graph_spec(source):
+    q = ''
+    if helpers.is_bad(source[1]): 
+        print(source[1])
+        return q
+    if source[1].find('.') == -1: return q
+    url = '<http://' + urllib.parse.quote(source[1]) + '>'
+    url_item = '<http://' + urllib.parse.quote(source[1]) + '/item>' 
+    graph = """ GRAPH """ + url 
+    #url
+    q += ("DELETE WHERE" + graph + """ {?item wdt:P17 ?country.}};
+          INSERT DATA { """ + graph + "{" + url_item + " wdt:P17 """ + urllib.parse.quote(source[1]) + """\' }} 
+          WHERE """ + match + ";" )
+    #country
+    if not helpers.is_bad(source[0]):
+        country_code = get_country_code(source[0])
+        if not helpers.is_bad(country_code):
+            c = country_code
+        else:
+            c = helpers.clean(source[0])
+        match = "{" + graph + "{ ?item wdt:P17 ?country}}"
+        q += ("DELETE" + match + """
+          INSERT { """ + graph + " {" + url_item + " wdt:P17 " + c + """ }} 
+          WHERE """ + match + ";" )
+    return q
+
+
+#takes in a list of rows
+#each row is a string list with one element per cell
+def dump_all(sources):
+    counter = 0
+    q = ''
+    for source in sources:
+        s = get_graph_spec(source)
+        counter += 1
+        q  += s
+        if counter % 1000 == 0:
+            print(counter)
+            query = prefixes + q
+            q = ''
+            try:
+                helpers.send_query(endpoint_url, query)
+            except:
+                with open('data/logfile', 'w') as f:
+                    f.write(query)
+                return "yikes"
+    try:
+        query = prefixes + q
+        helpers.send_query(endpoint_url, query)
+    except:
+        with open('data/logfile', 'w') as f:
+            f.write(query)
+            return "yikes"
+    print("DONE")
+
+if __name__ == '__main__':
+  write_meta_sources()
+  sources = helpers.read_in('data/cleaned/all.csv')
+  dump_all(sources)
+
