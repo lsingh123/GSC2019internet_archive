@@ -6,21 +6,6 @@ Created on Wed Jul 10 14:36:04 2019
 @author: lavanyasingh
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 10 12:18:16 2019
-
-@author: lavanyasingh
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul  9 12:44:51 2019
-
-@author: lavanyasingh
-"""
 
 import os
 os.chdir('/Users/lavanyasingh/Desktop/GSC2O19internet_archive/')

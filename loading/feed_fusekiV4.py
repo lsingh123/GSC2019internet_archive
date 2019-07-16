@@ -56,7 +56,8 @@ def write_meta_sources():
         wni:newsgrabber wdt:P1448 "Newsgrabber".
         wni:wikinews wdt:P1448 "Wikinews".
         wni:usnpl wdt:P1448 "USNPL".
-        wni:dmoz wdt:P1448 "DMOZ".}
+        wni:dmoz wdt:P1448 "DMOZ".
+        wni:prensaescrita wdt:P1448 "Prensa Escrita".}
     } """
     helpers.send_query(endpoint_url, query)
     print('successfully wrote meta sources')
