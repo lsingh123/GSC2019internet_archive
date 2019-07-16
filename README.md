@@ -18,6 +18,8 @@ An entry **ISBAD** if it is empty, None, NA, or TODO
 
 ## Dependencies
 
+**Python**
+
 Media Cloud:
 
 ``` pip install mediacloud ```
@@ -29,6 +31,14 @@ Matplotlib:
 Venn:
 
 ``` pip install matplotlib_venn ```
+
+**Java**
+
+https://github.com/google/guava
+
+http://opencsv.sourceforge.net/
+
+*Open CSV has its own dependencies and transitive dependencies (dependencies of the dependencies)*
 
 ## Collections
 
