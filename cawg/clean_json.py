@@ -12,16 +12,21 @@ def flip_dict(d):
     for key in d:
         value = d[key]
     return {value:int(key.replace(",", ""))}
-    
 
+def dict_to_array(d):
+    data = {}
+    for mini_d in d:
+        for key in mini_d:
+            data.update({mini_d[key]:int(key.replace(",", ""))})
+    return data
+            
 with open('newssitesPOC.json') as json_file:
     data = json.load(json_file)
     for key in data:
         if key.find("top") != -1:
             d = data[key]
-            data[key]  = [flip_dict(mini_d) for mini_d in d]
-            #print(data[key])
-    print(data)
+            data[key]  = dict_to_array(d)
+            print(data[key])
     
-with open('newssites_cleaned.json', 'w') as outfile:
+with open('newssites_cleaned2.json', 'w') as outfile:
     json.dump(data, outfile)

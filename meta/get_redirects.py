@@ -16,7 +16,7 @@ import csv
 
 out = []
 CONNECTIONS = 100
-TIMEOUT = 10
+TIMEOUT = 30
 
 def read_in():
     sources = []
@@ -26,30 +26,18 @@ def read_in():
         for line in reader:
             total += 1
             try:
-                if int(line[1]) > 200 and int(line[1]) < 400:
+                if int(line[1]) == 301 or int(line[1]) == 308 or int(line[1]) == 303:
                     sources.append(line[0])
             except ValueError:
-                sources.append("NOREDIRECT")
-            if total > 5000: break
+                None
+            #if total > 1000: break
     print("DONE READING")
     return sources
 
-urls = read_in()
-
 def load_url(url, timeout):
     ans = requests.head(url, timeout=timeout)
-    return ans.url
+    return url, ans.url
 
-def zip(list1, list2):
-    results = {list1[i]: list2[i] for i in range(len(list1))}
-    return results
-
-def write_locations(locations):
-    with open('data/raw/redirects.csv', 'w') as outf:
-        w = csv.writer(outf, delimiter= ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
-        for url in locations:
-            w.writerow([url, locations[url]])
-    print("WROTE ALL REDIRECTS")
 
 def get_data():
     results = []
@@ -60,16 +48,24 @@ def get_data():
             try:
                 data = future.result()
             except Exception as exc:
-                data = str(type(exc))
+                data = ("", "ERROR")
             finally:
                 results.append(data)
                 out.append(data)
                 print(str(len(out)),end="\r")
-        time2 = time.time(g)
+        time2 = time.time()
         return time1, time2, results
+
+def write_locations(locations):
+    with open('data/raw/redirects.csv', 'w') as outf:
+        w = csv.writer(outf, delimiter= ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+        for url in locations:
+            w.writerow([url[0], url[1]])
+    print("WROTE ALL REDIRECTS")
     
+urls = read_in()
 time1, time2, results = get_data()
 print(f'Took {time2-time1:.2f} s')
-redirects = zip(urls, results)
-write_locations(redirects)
+write_locations(results)
 print("DONE")
+

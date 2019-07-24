@@ -7,6 +7,7 @@ Created on Thu Jul 18 15:21:19 2019
 """
 
 import requests
-url = "http://independent.ng"
+url = "http://newslink.pk"
 ans = requests.head(url)
-print(ans.url)
+print(ans.status)
+print(ans.history)
