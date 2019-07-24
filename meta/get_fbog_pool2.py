@@ -6,7 +6,7 @@ Created on Wed Jul 24 12:58:07 2019
 @author: lavanyasingh
 """
 
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 from bs4 import BeautifulSoup
 import csv
 from requests_html import HTMLSession
@@ -16,17 +16,19 @@ class FBOGCrawler():
     
     PATH = "/Users/lavanyasingh/Desktop/GSC2O19internet_archive/data/raw/"
     
-    def __init__(self):
-        self.results, self.urls, self.res = [], [], []
+    def __init__(self, processes):
+        self.res, self.urls = [], []
         self.session = HTMLSession()
         self.read_in()
+        self.processes = processes
         
     def read_in(self):
         with open(self.PATH + "all_raw_cleaned3.csv", 'r') as f:
             reader = csv.reader(f, delimiter=',')
             for line in reader:
+                #for testing purposes
+                #if len(self.urls) > 100: break
                 self.urls.append("http://" + "".join(line[1]))
-                if len(self.urls) > 1000: break
         print("DONE READING")
     
     def get_attr(self, head, attr):
@@ -69,8 +71,7 @@ class FBOGCrawler():
         print("WROTE ALL META")
     
     def main(self):
-        #after testing it looks like 17 is the optimal number of processes
-        p = Pool(processes=17)
+        p = Pool(processes=self.processes)
         time1 = time.time()
         self.res = p.map(self.get_meta, self.urls)
         p.close()
@@ -81,6 +82,6 @@ class FBOGCrawler():
         self.session.close()
 
 if __name__ == "__main__":
-    crawler = FBOGCrawler()
+    crawler = FBOGCrawler(processes = 2)
     crawler.main()
     print("FINISHED RUNNING")
