@@ -26,7 +26,7 @@ class FBOGCrawler():
         self.processes = processes
 
     def read_in(self):
-        with open(self.PATH + "all_raw_cleaned3.csv", 'r') as f:
+        with open(self.PATH + "/all_raw_cleaned3.csv", 'r') as f:
             reader = csv.reader(f, delimiter=',')
             for line in reader:
                 # for testing purposes
@@ -67,7 +67,7 @@ class FBOGCrawler():
             return [url, str(e)]
 
     def write_meta(self):
-        with open(self.PATH + "meta_good.csv", 'w') as outf:
+        with open(self.PATH + "/meta_good.csv", 'w') as outf:
             w = csv.writer(outf, delimiter=',', quotechar='"',
                            quoting=csv.QUOTE_MINIMAL)
             for url in self.res:
