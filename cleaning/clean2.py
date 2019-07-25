@@ -21,7 +21,6 @@ def clean(url):
         url = url[:next(stream).span()[0]]
     except StopIteration:
         url = url
-    stream = re.finditer('%', url)
     return url
 
 def read_in():
