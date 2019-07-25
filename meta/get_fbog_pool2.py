@@ -17,7 +17,7 @@ os.chdir(os.path.dirname(os.getcwd()))
 
 class FBOGCrawler():
 
-    PATH = os.getcwd() + "data/raw"
+    PATH = os.getcwd() + "/data/raw"
 
     def __init__(self, processes):
         self.res, self.urls = [], []
