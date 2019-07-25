@@ -30,7 +30,7 @@ class FBOGCrawler():
             reader = csv.reader(f, delimiter=',')
             for line in reader:
                 # for testing purposes
-                if len(self.urls) > 100: break
+                #if len(self.urls) > 100: break
                 self.urls.append("http://" + "".join(line[1]))
         print("DONE READING")
 
@@ -87,7 +87,7 @@ class FBOGCrawler():
 
 
 if __name__ == "__main__":
-    #after testing, 16 is the optimal number of processes
-    crawler = FBOGCrawler(processes=16)
+    #after testing, 9 is the optimal number of processes
+    crawler = FBOGCrawler(processes=9)
     crawler.main()
     print("FINISHED RUNNING")
