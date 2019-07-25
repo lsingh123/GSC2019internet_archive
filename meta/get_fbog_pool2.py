@@ -11,11 +11,13 @@ from bs4 import BeautifulSoup
 import csv
 from requests_html import HTMLSession
 import time
+import os
+os.chdir(os.path.dirname(os.getcwd()))
 
 
 class FBOGCrawler():
 
-    PATH = "/Users/lavanyasingh/Desktop/GSC2O19internet_archive/data/raw/"
+    PATH = os.getcwd()
 
     def __init__(self, processes):
         self.res, self.urls = [], []
