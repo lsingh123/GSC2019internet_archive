@@ -30,6 +30,7 @@ class FBOGCrawler():
             reader = csv.reader(f, delimiter=',')
             for line in reader:
                 # for testing purposes
+                print(line)
                 if len(self.urls) > 100: break
                 self.urls.append("http://" + "".join(line[1]))
         print("DONE READING")
