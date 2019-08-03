@@ -87,7 +87,7 @@ class FBOGCrawler():
 
 
 if __name__ == "__main__":
-    #after testing, 9 is the optimal number of processes
+    #after testing, 9 is the optimal number of processes on `lavanya-dev` VM
     crawler = FBOGCrawler(processes=9)
     crawler.main()
     print("FINISHED RUNNING")
